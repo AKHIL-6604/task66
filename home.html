@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITS YOUR'S SHOPPINGMALL</title>
+    <link rel="stylesheet" href="Styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>ITS YOUR'S SHOPPINGMALL</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                <li><a href="#" onclick="showPage('register')">Register</a></li>
+                <li><a href="#" onclick="showPage('login')">Login</a></li>
+                <li><a href="#" onclick="showPage('catalog')">Catalog</a></li>
+                <li><a href="#" onclick="showPage('cart')">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="about" class="page">
+        <h2>About Us</h2>
+        <p>Welcome to  MY SHOPPINGMALL! We offer the best products with great deals.</p>
+        <a href="#" onclick="showPage('register')" class="btn">Register</a>
+        <a href="#" onclick="showPage('login')" class="btn">Login</a>
+    </div>
+
+    <div id="register" class="page">
+        <h2>Register</h2>
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+            <label for="mobile">Mobile Number:</label>
+            <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <button type="submit">Register</button>
+        </form>
+        <a href="#" onclick="showPage('login')" class="btn">Login</a>
+    </div>
+
+    <div id="login" class="page">
+        <h2>Login</h2>
+        <form>
+            <label for="login-email">Email:</label>
+            <input type="email" id="login-email" name="email" required><br><br>
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="password" required><br><br>
+            <button type="submit" onclick="showPage('catalog')" class="btn">Login</button>
+        </form>
+    </div>
+
+    <div id="catalog" class="page">
+        <h2>Catalog</h2>
+        <div class="product">
+            <h3>Product 1</h3>
+            <p>$10.00</p>
+            <button class="btn" onclick="addToCart('Product 1', 10)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h3>Product 2</h3>
+            <p>$15.00</p>
+            <button class="btn" onclick="addToCart('Product 2', 15)">Add to Cart</button>
+        </div>
+        <a href="#" onclick="showPage('cart')" class="btn">Next: Cart</a>
+    </div>
+
+    <div id="cart" class="page">
+        <h2>Your Cart</h2>
+        <ul id="cart-items">
+            <!-- Cart items will be displayed here -->
+        </ul>
+        <a href="#" onclick="showPage('catalog')" class="btn">Continue Shopping</a>
+    </div>
+
+    <footer>
+        <p>&copy; ITS YOUR'S SHOPPINGMALL</p>
+    </footer>
+
+    <script>
+        let cart = [];
+
+        // Function to show a specific page
+        function showPage(pageName) {
+            var pages = document.querySelectorAll('.page');
+            pages.forEach(function(page) {
+                page.style.display = 'none';
+            });
+            document.getElementById(pageName).style.display = 'block';
+        }
+
+        // Function to add products to the cart
+        function addToCart(productName, productPrice) {
+            cart.push({ name: productName, price: productPrice });
+            alert(`${productName} has been added to your cart!`);
+        }
+
+        // Function to update the cart page with the products in the cart
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = ''; // Clear current cart content
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<li>Your shopping cart is empty.</li>';
+            } else {
+                cart.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = `${item.name} - $${item.price}`;
+                    cartItems.appendChild(li);
+                });
+            }
+        }
+
+        // Function to show the cart page and update the cart display
+        function showCartPage() {
+            updateCart();
+            showPage('cart');
+        }
+
+        // Attach event to cart link
+        document.querySelector('a[href="#"]').addEventListener('click', showCartPage);
+
+        // Default page view
+        showPage('about');
+    </script>
+</body>
+</html>
